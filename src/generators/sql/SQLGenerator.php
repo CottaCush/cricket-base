@@ -1,25 +1,29 @@
 <?php
 
-namespace CottaCush\Cricket\Generators;
+namespace CottaCush\Cricket\Generators\SQL;
 
-use CottaCush\Cricket\Exceptions\SQLReportGenerationException;
-use CottaCush\Cricket\Interfaces\ReportGeneratorInterface;
+use CottaCush\Cricket\Exceptions\SQLQueryGenerationException;
+use CottaCush\Cricket\Interfaces\GeneratorInterface;
 use Exception;
 use Yii;
 use yii\db\Connection;
 
 /**
- * Class SQLReportGenerator
- * @package CottaCush\Cricket\Generators
+ * Class SQLGenerator
+ * @package CottaCush\Cricket\Report\Generators
  * @author Taiwo Ladipo <taiwo.ladipo@cottacush.com>
  * @author Olawale Lawal <wale@cottacush.com>
  */
-class SQLReportGenerator implements ReportGeneratorInterface
+class SQLGenerator implements GeneratorInterface
 {
     private $query;
     private $db;
 
     private $isFreshConnection = false;
+
+    const QUERY_ALL = 'queryAll';
+    const QUERY_ONE = 'queryOne';
+    const QUERY_COLUMN = 'queryColumn';
 
     public function __construct($query, Connection $db = null)
     {
@@ -33,17 +37,18 @@ class SQLReportGenerator implements ReportGeneratorInterface
 
     /**
      * @author Taiwo Ladipo <taiwo.ladipo@cottacush.com>
+     * @param string $function
      * @return array
-     * @throws SQLReportGenerationException
+     * @throws SQLQueryGenerationException
      */
-    public function generateReport()
+    public function generateResult($function = self::QUERY_ALL)
     {
         try {
             $this->openConnection();
-            $result = $this->db->createCommand($this->query)->queryAll();
+            $result = $this->db->createCommand($this->query)->{$function}();
             $this->closeConnection();
         } catch (Exception $e) {
-            throw new SQLReportGenerationException($e->getMessage());
+            throw new SQLQueryGenerationException($e->getMessage());
         }
         return $result;
     }
