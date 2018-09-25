@@ -1,16 +1,16 @@
 <?php
 
-namespace CottaCush\Cricket\Generators;
+namespace CottaCush\Cricket\Generators\SQL;
 
 use CottaCush\Cricket\Interfaces\QueryInterface;
 
 /**
- * Class SQLReportQueryBuilder
- * @package CottaCush\Cricket\Generators
+ * Class SQLQueryBuilder
+ * @package CottaCush\Cricket\Report\Generators
  * @author Taiwo Ladipo <taiwo.ladipo@cottacush.com>
  * @author Olawale Lawal <wale@cottacush.com>
  */
-class SQLReportQueryBuilder
+class SQLQueryBuilder
 {
     public $query;
     public $data;

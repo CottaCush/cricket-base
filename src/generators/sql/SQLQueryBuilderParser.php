@@ -1,6 +1,6 @@
 <?php
 
-namespace CottaCush\Cricket\Generators;
+namespace CottaCush\Cricket\Generators\SQL;
 
 use CottaCush\Cricket\Interfaces\CricketQueryableInterface;
 use CottaCush\Cricket\Traits\ValueGetter;
@@ -21,10 +21,16 @@ class SQLQueryBuilderParser
      * @param array $data
      * @param array $placeholderValues
      * @param null $db
-     * @throws \CottaCush\Cricket\Exceptions\SQLReportGenerationException
+     * @param string $function
+     * @throws \CottaCush\Cricket\Report\Exceptions\SQLReportGenerationException
      */
-    public function parse(CricketQueryableInterface $report, &$data = [], $placeholderValues = [], $db = null)
-    {
+    public function parse(
+        CricketQueryableInterface $report,
+        &$data = [],
+        $placeholderValues = [],
+        $db = null,
+        $function = SQLGenerator::QUERY_ALL
+    ) {
         $queryObj = $report->getQuery();
         $shouldReplacePlaceholders = !empty($placeholderValues); //Should the placeholders be replaced in the query
         $this->hasInputPlaceholders = $queryObj->hasInputPlaceholders();
@@ -42,17 +48,17 @@ class SQLQueryBuilderParser
         }
 
         if ($shouldReplacePlaceholders) { //If there are placeholders to be injected into the query before execution
-            $queryBuilder = new SQLReportQueryBuilder($queryObj, $placeholderValues);
+            $queryBuilder = new SQLQueryBuilder($queryObj, $placeholderValues);
             $this->query = $queryBuilder->buildQuery();
 
-            $generator = new SQLReportGenerator($this->query, $db);
-            $data = $generator->generateReport();
+            $generator = new SQLGenerator($this->query, $db);
+            $data = $generator->generateResult($function);
 
             $this->hasPlaceholdersReplaced = true;
         } else {
             if (!$this->hasInputPlaceholders) { //No session placeholders and no submission
-                $generator = new SQLReportGenerator($this->query, $db);
-                $data = $generator->generateReport();
+                $generator = new SQLGenerator($this->query, $db);
+                $data = $generator->generateResult($function);
             }
         }
     }

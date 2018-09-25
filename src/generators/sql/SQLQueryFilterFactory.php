@@ -1,10 +1,10 @@
 <?php
 
-namespace CottaCush\Cricket\Generators;
+namespace CottaCush\Cricket\Generators\SQL;
 
-use CottaCush\Cricket\Exceptions\SQLReportGenerationException;
-use CottaCush\Cricket\Interfaces\QueryInterface;
+use CottaCush\Cricket\Exceptions\SQLQueryGenerationException;
 use CottaCush\Cricket\Interfaces\PlaceholderInterface;
+use CottaCush\Cricket\Interfaces\QueryInterface;
 use CottaCush\Cricket\Models\PlaceholderType;
 use CottaCush\Cricket\Traits\ValueGetter;
 use kartik\select2\Select2;
@@ -14,12 +14,12 @@ use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 
 /**
- * Class SQLReportFilterFactory
+ * Class SQLQueryFilterFactory
  * @package CottaCush\Cricket\Generators
  * @author Taiwo Ladipo <taiwo.ladipo@cottacush.com>
  * @author Olawale Lawal <wale@cottacush.com>
  */
-class SQLReportFilterFactory
+class SQLQueryFilterFactory
 {
     use ValueGetter;
 
@@ -70,7 +70,7 @@ class SQLReportFilterFactory
             case PlaceholderType::TYPE_DROPDOWN:
                 try {
                     return $this->generateDropdown($value);
-                } catch (SQLReportGenerationException $e) {
+                } catch (SQLQueryGenerationException $e) {
                 }
                 break;
 
@@ -96,7 +96,7 @@ class SQLReportFilterFactory
      * @author Olawale Lawal <wale@cottacush.com>
      * @param null $value
      * @return string
-     * @throws SQLReportGenerationException
+     * @throws SQLQueryGenerationException
      */
     private function generateDropdown($value = null)
     {
@@ -122,9 +122,9 @@ class SQLReportFilterFactory
         }
 
         //Build the query from the report to get data
-        $queryBuilder = new SQLReportQueryBuilder($dropdownQuery, $placeholderValues);
-        $generator = new SQLReportGenerator($queryBuilder->buildQuery(), $this->database);
-        $data = $generator->generateReport();
+        $queryBuilder = new SQLQueryBuilder($dropdownQuery, $placeholderValues);
+        $generator = new SQLGenerator($queryBuilder->buildQuery(), $this->database);
+        $data = $generator->generateResult();
 
         if (count($data)) {
             $data = ArrayHelper::map($data, 'key', 'value');
