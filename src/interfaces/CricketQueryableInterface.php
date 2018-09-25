@@ -5,6 +5,7 @@ namespace CottaCush\Cricket\Interfaces;
 /**
  * Interface CricketQueryableInterface
  * @package CottaCush\Cricket\Interfaces
+ * @property string type
  */
 interface CricketQueryableInterface
 {
