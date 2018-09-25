@@ -18,15 +18,14 @@ class SQLQueryBuilderParser
     /**
      * @author Olawale Lawal <wale@cottacush.com>
      * @param CricketQueryableInterface $report
-     * @param array $data
      * @param array $placeholderValues
      * @param null $db
      * @param string $function
-     * @throws \CottaCush\Cricket\Report\Exceptions\SQLReportGenerationException
+     * @return array
+     * @throws \CottaCush\Cricket\Exceptions\SQLQueryGenerationException
      */
     public function parse(
         CricketQueryableInterface $report,
-        &$data = [],
         $placeholderValues = [],
         $db = null,
         $function = SQLGenerator::QUERY_ALL
@@ -36,6 +35,7 @@ class SQLQueryBuilderParser
         $this->hasInputPlaceholders = $queryObj->hasInputPlaceholders();
 
         $this->query = $queryObj->getQuery();
+        $data = [];
 
         if (!$this->hasInputPlaceholders) { // Report has only session placeholders or none
             $shouldReplacePlaceholders = true;
@@ -61,6 +61,8 @@ class SQLQueryBuilderParser
                 $data = $generator->generateResult($function);
             }
         }
+
+        return $data;
     }
 
     public function arePlaceholdersReplaced()

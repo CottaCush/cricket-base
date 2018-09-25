@@ -10,7 +10,7 @@ use yii\db\Connection;
 
 /**
  * Class SQLGenerator
- * @package CottaCush\Cricket\Report\Generators
+ * @package CottaCush\Cricket\Generators\SQL
  * @author Taiwo Ladipo <taiwo.ladipo@cottacush.com>
  * @author Olawale Lawal <wale@cottacush.com>
  */
