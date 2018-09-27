@@ -11,11 +11,11 @@ namespace CottaCush\Cricket\Assets;
 class DatePickerAsset extends BaseCricketAsset
 {
     public $css = [
-        'datepicker/bootstrap-datepicker3.standalone.min.css'
+        self::ASSETS_PLUGINS_PATH . '/datepicker/bootstrap-datepicker3.standalone.min.css'
     ];
 
     public $js = [
-        'datepicker/bootstrap-datepicker.min.js'
+        self::ASSETS_PLUGINS_PATH . '/datepicker/bootstrap-datepicker.min.js'
     ];
 
     public $depends = [
