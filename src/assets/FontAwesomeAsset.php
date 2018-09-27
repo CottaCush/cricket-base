@@ -3,7 +3,7 @@
 namespace CottaCush\Cricket\Assets;
 
 /**
- * Class BootstrapPluginAsset
+ * Class FontAwesomeAsset
  * @author Taiwo Ladipo <taiwo.ladipo@cottacush.com>
  * @package CottaCush\Cricket\Assets
  */
