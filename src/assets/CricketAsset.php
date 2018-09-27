@@ -3,7 +3,7 @@
 namespace CottaCush\Cricket\Assets;
 
 /**
- * Class BootstrapPluginAsset
+ * Class CricketAsset
  * @author Taiwo Ladipo <taiwo.ladipo@cottacush.com>
  * @package CottaCush\Cricket\Assets
  */
@@ -15,7 +15,6 @@ class CricketAsset extends BaseCricketAsset
 
     public $depends = [
         'CottaCush\Cricket\Assets\BootstrapPluginAsset',
-        'CottaCush\Cricket\Assets\DatePickerAsset',
         'CottaCush\Cricket\Assets\FontAwesomeAsset'
     ];
 }
