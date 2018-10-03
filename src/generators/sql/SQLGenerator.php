@@ -24,6 +24,7 @@ class SQLGenerator implements GeneratorInterface
     const QUERY_ALL = 'queryAll';
     const QUERY_ONE = 'queryOne';
     const QUERY_COLUMN = 'queryColumn';
+    const QUERY_SCALAR = 'queryScalar';
 
     public function __construct($query, Connection $db = null)
     {

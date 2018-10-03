@@ -5,6 +5,11 @@ namespace CottaCush\Cricket\Interfaces;
 /**
  * Interface QueryInterface
  * @package CottaCush\Cricket\Interfaces
+ *
+ * @property PlaceholderInterface[] $placeholders
+ * @property PlaceholderInterface[] $inputPlaceholders
+ * @property PlaceholderInterface[] $sessionPlaceholders
+ * @property PlaceholderInterface[] $dropdownPlaceholders
  */
 interface QueryInterface
 {
