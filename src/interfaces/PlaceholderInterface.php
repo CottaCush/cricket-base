@@ -7,6 +7,8 @@ use yii\db\ActiveQueryInterface;
 /**
  * Interface PlaceholderInterface
  * @package CottaCush\Cricket\Interfaces
+ * @property string $name
+ * @property string $description
  */
 interface PlaceholderInterface
 {

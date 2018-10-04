@@ -30,9 +30,9 @@ class SQLQueryBuilderParser
         $db = null,
         $function = SQLGenerator::QUERY_ALL
     ) {
-        $queryObj = $report->getQuery();
+        $queryObj = $report->query;
         $shouldReplacePlaceholders = !empty($placeholderValues); //Should the placeholders be replaced in the query
-        $this->hasInputPlaceholders = $queryObj->hasInputPlaceholders();
+        $this->hasInputPlaceholders = count($queryObj->inputPlaceholders);
 
         $this->query = $queryObj->getQuery();
         $data = [];
