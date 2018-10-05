@@ -19,16 +19,16 @@ class BaseCricketAsset extends AssetBundle
     /**
      * The public js asset directory
      */
-    const ASSETS_JS_PATH = self::ASSETS_PATH . '/js';
+    const ASSETS_JS_PATH = 'js';
     /**
      * The public css asset directory
      */
-    const ASSETS_CSS_PATH = self::ASSETS_PATH . '/css';
+    const ASSETS_CSS_PATH = 'css';
 
     /**
      * The public plugins asset directory
      */
-    const ASSETS_PLUGINS_PATH = self::ASSETS_PATH . '/plugins';
+    const ASSETS_PLUGINS_PATH = 'plugins';
 
     /**
      * Set the sourcePath as self::ASSETS_PATH by default.
