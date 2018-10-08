@@ -13,7 +13,7 @@ class CricketAsset extends BaseCricketAsset
         self::ASSETS_CSS_PATH . '/styles.css'
     ];
 
-    public $cjs = [
+    public $js = [
         self::ASSETS_JS_PATH . '/row-elements.js'
     ];
 
