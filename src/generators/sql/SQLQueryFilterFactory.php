@@ -25,6 +25,7 @@ class SQLQueryFilterFactory
 
     public $placeholder;
     public $database;
+    const CSS_COLUMN_SPEC = 'col-sm-12';
 
     public function __construct(PlaceholderInterface $placeholder = null, Connection $database = null)
     {
@@ -40,7 +41,7 @@ class SQLQueryFilterFactory
 
         switch ($type) {
             case PlaceholderType::TYPE_BOOLEAN:
-                return Html::beginTag('div', ['class' => 'form-group col-sm-6']) .
+                return Html::beginTag('div', ['class' => ['form-group', self::CSS_COLUMN_SPEC]]) .
                     Html::tag('label', $description, ['class' => 'control-label']) .
                     Html::radioList($name, $value, PlaceholderType::BOOLEAN_VALUES_MAP, [
                         'item' => function ($index, $label, $name, $checked, $value) {
@@ -57,7 +58,7 @@ class SQLQueryFilterFactory
                 break;
 
             case PlaceholderType::TYPE_DATE:
-                return Html::beginTag('div', ['class' => 'form-group col-sm-6']) .
+                return Html::beginTag('div', ['class' => ['form-group', self::CSS_COLUMN_SPEC]]) .
                     Html::label($description, $name, ['class' => 'control-label']) .
                     Html::textInput(
                         $name,
@@ -79,7 +80,7 @@ class SQLQueryFilterFactory
                 break;
 
             default:
-                return Html::beginTag('div', ['class' => 'form-group col-sm-6']) .
+                return Html::beginTag('div', ['class' => ['form-group', self::CSS_COLUMN_SPEC]]) .
                     Html::label($description, $name, ['class' => 'control-label']) .
                     Html::textInput(
                         $name,
@@ -139,7 +140,7 @@ class SQLQueryFilterFactory
         }
 
         //Generate the dropdown from the values
-        $html .= Html::beginTag('div', ['class' => 'form-group col-sm-6']) .
+        $html .= Html::beginTag('div', ['class' => ['form-group', self::CSS_COLUMN_SPEC]]) .
             Html::label($dropdownQuery->name, $this->placeholder->getName(), ['class' => 'control-label']) .
             Select2::widget([
                 'name' => $this->placeholder->getName(),
