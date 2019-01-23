@@ -83,18 +83,18 @@ class SQLQueryBuilder
      */
     private function replacePlaceholder($string, $match, $field, $filterValue, $operator)
     {
-        $ini = stripos($string, $match);
-        if ($ini == 0) {
+        $initialMatchStart = stripos($string, $match);
+        if ($initialMatchStart == 0) {
             return $string;
         }
-        $firstOccurrence = $ini + strlen($match);
+        $firstOccurrence = $initialMatchStart + strlen($match); //end of first match
         $placeholderPosition = stripos($string, $match, $firstOccurrence) - $firstOccurrence;
-        $placeholderSeparator = substr($string, $ini, $placeholderPosition);
+        $placeholderSeparator = substr($string, $initialMatchStart, $placeholderPosition);
         $totalPlaceholderLength = strlen($placeholderSeparator) + (strlen($match) * 2);
         $string = substr_replace(
             $string,
             $this->parseFilterCondition($field, $operator, $filterValue),
-            $ini,
+            $initialMatchStart,
             $totalPlaceholderLength
         );
         return $string;
