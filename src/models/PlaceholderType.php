@@ -20,6 +20,7 @@ class PlaceholderType extends BaseCricketModel
     const TYPE_TEXT = 'text';
     const TYPE_SESSION = 'session-variable';
     const TYPE_DROPDOWN = 'dropdown';
+    const TYPE_DASHBOARD_FILTER = 'dashboard-filter';
 
     const BOOLEAN_VALUES_MAP = [
         '1' => 'Yes',

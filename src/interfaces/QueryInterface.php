@@ -27,6 +27,8 @@ interface QueryInterface
 
     public function hasInputPlaceholders();
 
+    public function getDashboardFilterPlaceholders();
+
     public function getPlaceholderQueries();
 
     public function getDropdownPlaceholders();
