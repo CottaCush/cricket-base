@@ -3,6 +3,7 @@
 namespace CottaCush\Cricket\Generators\SQL;
 
 use CottaCush\Cricket\Interfaces\CricketQueryableInterface;
+use CottaCush\Cricket\Models\Query;
 use CottaCush\Cricket\Traits\ValueGetter;
 
 class SQLQueryBuilderParser
@@ -30,6 +31,7 @@ class SQLQueryBuilderParser
         $db = null,
         $function = SQLGenerator::QUERY_ALL
     ) {
+        /** @var Query $queryObj */
         $queryObj = $report->query;
         $shouldReplacePlaceholders = !empty($placeholderValues); //Should the placeholders be replaced in the query
         $this->hasInputPlaceholders = count($queryObj->inputPlaceholders);
@@ -42,6 +44,7 @@ class SQLQueryBuilderParser
         if (count($dashboardFilterPlaceholders)) {
             $queryBuilder = new SQLQueryBuilder($queryObj, $placeholderValues);
             $this->query = $queryBuilder->buildDashboardQuery($dashboardFilterPlaceholders);
+            $queryObj->query = $this->query;
             $generator = new SQLGenerator($this->query, $db);
             $data = $generator->generateResult($function);
         }
