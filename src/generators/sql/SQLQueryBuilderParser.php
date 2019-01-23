@@ -37,7 +37,16 @@ class SQLQueryBuilderParser
         $this->query = $queryObj->getQuery();
         $data = [];
 
-        if (!$this->hasInputPlaceholders) { // Report has only session placeholders or none
+        $dashboardFilterPlaceholders = $queryObj->getDashboardFilterPlaceholders()->all();
+        //Query has dashboard filter placeholders
+        if (count($dashboardFilterPlaceholders)) {
+            $queryBuilder = new SQLQueryBuilder($queryObj, $placeholderValues);
+            $this->query = $queryBuilder->buildDashboardQuery($dashboardFilterPlaceholders);
+            $generator = new SQLGenerator($this->query, $db);
+            $data = $generator->generateResult($function);
+        }
+
+        if (!$this->hasInputPlaceholders) { // Query has only session placeholders or none
             $shouldReplacePlaceholders = true;
             $placeholders = $queryObj->sessionPlaceholders;
             $placeholderValues = [];

@@ -59,6 +59,9 @@
     -webkit-box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
   }
+  .cricket-wrapper .modal {
+    overflow-y: scroll;
+  }
   .cricket-wrapper .modal-sm {
     width: 300px;
   }
@@ -897,6 +900,7 @@
   -webkit-overflow-scrolling: touch;
   outline: 0;
   background: rgba(0, 0, 0, 0.6);
+  overflow-y: scroll;
 }
 .cricket-wrapper .modal.fade .modal-dialog {
   -webkit-transform: translate(0, -25%);
@@ -1305,6 +1309,28 @@
   position: absolute;
   margin-left: -20px;
   margin-top: 4px;
+}
+.cricket-date-range-filter {
+  float: right;
+  display: inline-block;
+}
+.cricket-date-range-filter label {
+  display: inline;
+}
+.cricket-date-range-filter .dateInput {
+  display: inline;
+  width: 40% !important;
+}
+.cricket-date-range-filter .filter-btn {
+  width: auto;
+}
+.cricket-date-range-filter .cricket-date-range-separator {
+  background: #dcdcdc;
+  height: 32px;
+  display: inline;
+  padding: 5px 1px;
+  vertical-align: middle;
+  border-radius: 2px;
 }
 
 /*# sourceMappingURL=maps/styles.css.map */

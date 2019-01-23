@@ -89,7 +89,12 @@ class Query extends BaseCricketModel implements QueryInterface
      */
     public function getInputPlaceholders()
     {
-        return $this->getPlaceholders()->andWhere(['!=', 'placeholder_type', PlaceholderType::TYPE_SESSION]);
+        return $this->getPlaceholders()
+            ->andWhere([
+                'NOT IN',
+                'placeholder_type',
+                [PlaceholderType::TYPE_SESSION, PlaceholderType::TYPE_DASHBOARD_FILTER]
+            ]);
     }
 
     public function hasInputPlaceholders()
@@ -121,5 +126,14 @@ class Query extends BaseCricketModel implements QueryInterface
     public function getQuery()
     {
         return $this->query;
+    }
+
+    /**
+     * @author Taiwo Ladipo <taiwo.ladipo@cottacush.com>
+     * @return \yii\db\ActiveQuery
+     */
+    public function getDashboardFilterPlaceholders()
+    {
+        return $this->getPlaceholders()->andWhere(['placeholder_type' => PlaceholderType::TYPE_DASHBOARD_FILTER]);
     }
 }
