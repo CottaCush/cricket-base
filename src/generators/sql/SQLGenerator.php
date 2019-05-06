@@ -49,14 +49,15 @@ class SQLGenerator implements GeneratorInterface
     {
         try {
             $this->openConnection();
-            $count = '';
+            $count = 0;
+            $this->query = rtrim($this->query, ';');
             if ($paginate) {
                 if (!$page) { // first page of pagination
-                    $count =  $this->db->createCommand('SELECT COUNT(*) as total FROM ('.$this->query.') a')
+                    $count =  $this->db->createCommand("SELECT COUNT(*) as total FROM ($this->query) a")
                         ->{self::QUERY_SCALAR}();
                 }
                 $from = $page ? ($page - 1) * self::QUERY_LIMIT : 0;
-                $result = $this->db->createCommand($this->query. ' LIMIT ' . $from . ', ' . self::QUERY_LIMIT)
+                $result = $this->db->createCommand("$this->query LIMIT $from, " . self::QUERY_LIMIT)
                     ->{self::QUERY_ALL}();
             } else {
                 $result = $this->db->createCommand($this->query)->{$function}();
