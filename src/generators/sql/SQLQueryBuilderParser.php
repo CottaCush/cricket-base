@@ -3,9 +3,9 @@
 namespace CottaCush\Cricket\Generators\SQL;
 
 use CottaCush\Cricket\Interfaces\CricketQueryableInterface;
-use CottaCush\Cricket\Models\Query;
 use CottaCush\Cricket\Traits\ValueGetter;
 use yii\helpers\ArrayHelper;
+use CottaCush\Cricket\Models\Query;
 
 class SQLQueryBuilderParser
 {
@@ -51,6 +51,16 @@ class SQLQueryBuilderParser
         }
 
         $data = [];
+
+        $dashboardFilterPlaceholders = $queryObj->getDashboardFilterPlaceholders()->all();
+        //Query has dashboard filter placeholders
+        if (count($dashboardFilterPlaceholders)) {
+            $queryBuilder = new SQLQueryBuilder($queryObj, $placeholderValues);
+            $this->query = $queryBuilder->buildDashboardQuery($dashboardFilterPlaceholders);
+            $queryObj->query = $this->query;
+            $generator = new SQLGenerator($this->query, $db);
+            $data = $generator->generateResult($function);
+        }
 
         if (!$this->hasInputPlaceholders && !$paginate) { // Report has only session placeholders or none
             $shouldReplacePlaceholders = true;
