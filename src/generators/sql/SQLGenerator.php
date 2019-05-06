@@ -25,6 +25,7 @@ class SQLGenerator implements GeneratorInterface
     const QUERY_ONE = 'queryOne';
     const QUERY_COLUMN = 'queryColumn';
     const QUERY_SCALAR = 'queryScalar';
+    const QUERY_LIMIT = 20;
 
     public function __construct($query, Connection $db = null)
     {
@@ -39,19 +40,32 @@ class SQLGenerator implements GeneratorInterface
     /**
      * @author Taiwo Ladipo <taiwo.ladipo@cottacush.com>
      * @param string $function
+     * @param bool $paginate
+     * @param null $page
      * @return array
      * @throws SQLQueryGenerationException
      */
-    public function generateResult($function = self::QUERY_ALL)
+    public function generateResult($function = self::QUERY_ALL, $paginate = false, $page = null)
     {
         try {
             $this->openConnection();
-            $result = $this->db->createCommand($this->query)->{$function}();
+            $count = '';
+            if ($paginate) {
+                if (!$page) { // first page of pagination
+                    $count =  $this->db->createCommand('SELECT COUNT(*) as total FROM ('.$this->query.') a')
+                        ->{self::QUERY_SCALAR}();
+                }
+                $from = $page ? ($page - 1) * self::QUERY_LIMIT : 0;
+                $result = $this->db->createCommand($this->query. ' LIMIT ' . $from . ', ' . self::QUERY_LIMIT)
+                    ->{self::QUERY_ALL}();
+            } else {
+                $result = $this->db->createCommand($this->query)->{$function}();
+            }
             $this->closeConnection();
         } catch (Exception $e) {
             throw new SQLQueryGenerationException($e->getMessage());
         }
-        return $result;
+        return ['data' => $result, 'count' => $count];
     }
 
     /**

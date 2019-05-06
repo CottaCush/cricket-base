@@ -133,7 +133,7 @@ class SQLQueryFilterFactory
         //Build the query from the report to get data
         $queryBuilder = new SQLQueryBuilder($dropdownQuery, $placeholderValues);
         $generator = new SQLGenerator($queryBuilder->buildQuery(), $this->database);
-        $data = $generator->generateResult();
+        $data = ArrayHelper::getValue($generator->generateResult(), 'data');
 
         if (count($data)) {
             $data = ArrayHelper::map($data, 'key', 'value');
